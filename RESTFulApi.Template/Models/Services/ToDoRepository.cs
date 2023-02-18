@@ -105,7 +105,6 @@ namespace RESTFulApi.Template.Models.Services
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<ToDoDto> ToDoDtos { get; set; }
     }
 
     public class EditToDoDto

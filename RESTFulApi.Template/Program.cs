@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 string connection = @"Server=.;Database=RESTFulDB;Trusted_Connection=True;TrustServerCertificate=True;";
 builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connection));
 builder.Services.AddScoped<ToDoRepository, ToDoRepository>();
+builder.Services.AddScoped<CategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

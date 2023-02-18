@@ -1,0 +1,10 @@
+﻿200 : When an api called successfuly -- when the user requested for data 
+201 : When the user send new data (for add) -- in response we send code 201 and send the location in header for get the new data
+202 : When the method is async and the proccess may is long time 
+301 : When the api url changed -- in the case we send 301 and in header send the new location for access the api
+400 : When the client's request has a problem
+401 : When the client not access to the api -> Authentication
+403 : Authorization 
+404 : NOt Found -> the resource that called by user is not found
+409 : for tow edits
+500 : Server side problem

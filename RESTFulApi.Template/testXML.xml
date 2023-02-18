@@ -42,5 +42,17 @@
         <member name="M:RESTFulApi.Template.Migrations.Init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:RESTFulApi.Template.Migrations.UserToken">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.UserToken.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.UserToken.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.UserToken.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

@@ -38,6 +38,8 @@ string connection = @"Server=.;Database=RESTFulDB;Trusted_Connection=True;TrustS
 builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connection));
 builder.Services.AddScoped<ToDoRepository, ToDoRepository>();
 builder.Services.AddScoped<CategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<UserRepository, UserRepository>();
+builder.Services.AddScoped<UserTokenRepository, UserTokenRepository>();
 
 // Versioning
 builder.Services.AddApiVersioning(option =>
@@ -63,6 +65,8 @@ builder.Services.AddAuthentication(option =>
         ValidateIssuerSigningKey = true ,
         ValidateLifetime = true
     };
+    config.SaveToken = true;
+
     config.Events = new JwtBearerEvents
     {
         OnAuthenticationFailed = context =>

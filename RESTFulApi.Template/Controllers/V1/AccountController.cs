@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using RESTFulApi.Template.Helpers;
+using RESTFulApi.Template.Models.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,31 +16,38 @@ namespace RESTFulApi.Template.Controllers.V1
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration configuration;
-        public AccountController(IConfiguration configuration)
+        private readonly UserRepository _userRepository;
+        private readonly UserTokenRepository _userTokenRepository;
+        public AccountController(IConfiguration configuration 
+            , UserTokenRepository userTokenRepository 
+            , UserRepository userRepository)
         {
             this.configuration = configuration;
+            _userRepository = userRepository;
+            _userTokenRepository = userTokenRepository;
         }
-    
+
         [HttpPost]
         public IActionResult Login(string userName = "test" , string password = "test")
         {
-            if (true)
+            if (_userRepository.ValidateUser(userName))
             {
-
+                var user = _userRepository.Get();
                 var userClaims = new List<Claim>()
                 {
-                    new Claim("Username" , userName) ,
-                    new Claim("Password" , password)
+                    new Claim("UserId" , user.Id.ToString()),
+                    new Claim("Username" , user.Name)
                 };
                 string key = configuration["JwtConfig:Key"];
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
                 var signInCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var expire = DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:expires"]));
 
-                var token = new JwtSecurityToken
+				var token = new JwtSecurityToken
                     (
                         issuer : configuration["JwtConfig:issuer"], 
                         audience : configuration["JwtConfig:audience"],
-                        expires : DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:expires"])),
+                        expires : expire,
                         notBefore : DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:notBefore"])),
                         claims : userClaims ,
                         signingCredentials : signInCredential
@@ -46,8 +55,19 @@ namespace RESTFulApi.Template.Controllers.V1
 
 
                 var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+                SecurityHelper security = new SecurityHelper();
 
+                _userTokenRepository.SaveToken(new Models.Entities.UserToken
+                { 
+                    ExpireDate = expire , 
+                    HashToken = security.Getsha256Hash(jwtToken) , 
+                    User = user
+                });
                 return Ok(jwtToken);
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

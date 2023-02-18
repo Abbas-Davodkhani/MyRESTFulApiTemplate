@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RESTFulApi.Template.Models.Services;
 
 namespace RESTFulApi.Template.Controllers
@@ -6,6 +7,7 @@ namespace RESTFulApi.Template.Controllers
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly CategoryRepository _categoryRepository;

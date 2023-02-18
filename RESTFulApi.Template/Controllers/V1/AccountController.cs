@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,6 +13,12 @@ namespace RESTFulApi.Template.Controllers.V1
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+        public AccountController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+    
         [HttpPost]
         public IActionResult Login(string userName = "test" , string password = "test")
         {
@@ -23,16 +30,16 @@ namespace RESTFulApi.Template.Controllers.V1
                     new Claim("Username" , userName) ,
                     new Claim("Password" , password)
                 };
-                string key = "ImAbbasDavodkhaniAndImAdotNerProgrammer";
+                string key = configuration["JwtConfig:Key"];
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
                 var signInCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken
                     (
-                        issuer : "MyWebSite" , 
-                        audience : "MyWebSite" , 
-                        expires : DateTime.Now.AddMinutes(30) , 
-                        notBefore : DateTime.Now,
+                        issuer : configuration["JwtConfig:issuer"], 
+                        audience : configuration["JwtConfig:audience"],
+                        expires : DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:expires"])),
+                        notBefore : DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:notBefore"])),
                         claims : userClaims ,
                         signingCredentials : signInCredential
                     );

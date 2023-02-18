@@ -3,7 +3,8 @@ using RESTFulApi.Template.Models.Services;
 
 namespace RESTFulApi.Template.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -13,12 +14,20 @@ namespace RESTFulApi.Template.Controllers
         {
             _categoryRepository = categoryRepository;
         }
-
+        /// <summary>
+        /// لیست دسته بندی ها
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_categoryRepository.GetAll());
         }
+        /// <summary>
+        /// دریافت یک دسته بندی براساس شناسه
+        /// </summary>
+        /// <param name="id">شناسه دسته بندی</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult Get(int id) 
         {

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "kx/TKZLz6BpPwIwyhm9CGDRM8MmgbjjU6ni07xyFPMujKyo6UU3EBPVUyeXYw7yZgK6D5INVeQJ/y1qmDQZOrQ==",
+  "dgSpecHash": "lU91MHZ9cDQLORO2Np7Vk3Fi/g9FEbsG1EIdjev5m1iF3r6E/vg1FDx2AvxKE/wIMYi0QL9nbcZHNC1oc6nXBQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\PartLaptop\\Desktop\\Projects\\RESTFulApi\\RESTFulApi.Template\\RESTFulApi.Template.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PartLaptop\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\PartLaptop\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\PartLaptop\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\PartLaptop\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.0.0\\microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
     "C:\\Users\\PartLaptop\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.2\\microsoft.aspnetcore.openapi.7.0.2.nupkg.sha512",
     "C:\\Users\\PartLaptop\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\PartLaptop\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

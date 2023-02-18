@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RESTFulApi.Template</name>
+    </assembly>
+    <members>
+        <member name="M:RESTFulApi.Template.Controllers.CategoryController.Get">
+            <summary>
+            لیست دسته بندی ها
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTFulApi.Template.Controllers.CategoryController.Get(System.Int32)">
+            <summary>
+            دریافت یک دسته بندی براساس شناسه
+            </summary>
+            <param name="id">شناسه دسته بندی</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTFulApi.Template.Controllers.V1.ValuesController.Get">
+            <summary>
+            لیستی از مقادیر برای تست
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTFulApi.Template.Controllers.V1.ValuesController.Get(System.Int32)">
+            <summary>
+            تک مقدار برای تست
+            </summary>
+            <param name="id">شناسه ی رکورد</param>
+            <returns></returns>
+        </member>
+        <member name="T:RESTFulApi.Template.Migrations.Init">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.Init.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.Init.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:RESTFulApi.Template.Migrations.Init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

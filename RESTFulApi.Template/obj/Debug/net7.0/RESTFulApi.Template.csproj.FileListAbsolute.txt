@@ -74,3 +74,5 @@ C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\obj\Debug\ne
 C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\obj\Debug\net7.0\RESTFulApi.Template.pdb
 C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\obj\Debug\net7.0\RESTFulApi.Template.genruntimeconfig.cache
 C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\obj\Debug\net7.0\ref\RESTFulApi.Template.dll
+C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+C:\Users\PartLaptop\Desktop\Projects\RESTFulApi\RESTFulApi.Template\bin\Debug\net7.0\testXML.xml

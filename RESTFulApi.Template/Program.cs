@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RESTFulApi.Template.Models.Context;
 using RESTFulApi.Template.Models.Services;
+using RESTFulApi.Template.Models.Services.Validator;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
@@ -40,7 +41,7 @@ builder.Services.AddScoped<ToDoRepository, ToDoRepository>();
 builder.Services.AddScoped<CategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<UserRepository, UserRepository>();
 builder.Services.AddScoped<UserTokenRepository, UserTokenRepository>();
-
+builder.Services.AddScoped<ITokenValidator, TokenValidator>();
 // Versioning
 builder.Services.AddApiVersioning(option =>
 {
@@ -89,7 +90,8 @@ builder.Services.AddAuthentication(option =>
         },
         OnTokenValidated = context =>
         {
-            return Task.CompletedTask;
+            var tokenValidatorService = context.HttpContext.RequestServices.GetService<ITokenValidator>();
+            return tokenValidatorService.Execute(context);
         }
     };
 });

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RESTFulApi.Template.Helpers;
+using RESTFulApi.Template.Models;
 using RESTFulApi.Template.Models.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,43 +33,68 @@ namespace RESTFulApi.Template.Controllers.V1
         {
             if (_userRepository.ValidateUser(userName))
             {
-                var user = _userRepository.Get();
-                var userClaims = new List<Claim>()
-                {
-                    new Claim("UserId" , user.Id.ToString()),
-                    new Claim("Username" , user.Name)
-                };
-                string key = configuration["JwtConfig:Key"];
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-                var signInCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var expire = DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:expires"]));
-
-				var token = new JwtSecurityToken
-                    (
-                        issuer : configuration["JwtConfig:issuer"], 
-                        audience : configuration["JwtConfig:audience"],
-                        expires : expire,
-                        notBefore : DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:notBefore"])),
-                        claims : userClaims ,
-                        signingCredentials : signInCredential
-                    );
-
-
-                var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-                SecurityHelper security = new SecurityHelper();
-
-                _userTokenRepository.SaveToken(new Models.Entities.UserToken
-                { 
-                    ExpireDate = expire , 
-                    HashToken = security.Getsha256Hash(jwtToken) , 
-                    User = user
-                });
-                return Ok(jwtToken);
+                return Ok(GetToken());
             }
             else
             {
                 return BadRequest();
             }
         }
+
+        [HttpPost("refreshToken")]
+        public IActionResult RefreshToken(string refreshToken)
+        {
+            var userToken = _userTokenRepository.GetRefreshToken(refreshToken);
+            if (userToken == null) return Unauthorized();
+            if (userToken.RefreshTokenExp < DateTime.Now) return Unauthorized("Token Expired");
+
+            return Ok(GetToken());
+        }
+
+        private LoginResultDto GetToken()
+        {
+			var user = _userRepository.Get();
+			var userClaims = new List<Claim>()
+				{
+					new Claim("UserId" , user.Id.ToString()),
+					new Claim("Username" , user.Name)
+				};
+			string key = configuration["JwtConfig:Key"];
+			var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+			var signInCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+			var expire = DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:expires"]));
+
+			var token = new JwtSecurityToken
+				(
+					issuer: configuration["JwtConfig:issuer"],
+					audience: configuration["JwtConfig:audience"],
+					expires: expire,
+					notBefore: DateTime.Now.AddMinutes(Convert.ToInt32(configuration["JwtConfig:notBefore"])),
+					claims: userClaims,
+					signingCredentials: signInCredential
+				);
+
+
+			var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+            string refreshToken = Guid.NewGuid().ToString();
+
+
+			SecurityHelper security = new SecurityHelper();
+
+			_userTokenRepository.SaveToken(new Models.Entities.UserToken
+			{
+				ExpireDate = expire,
+				HashToken = security.Getsha256Hash(jwtToken),
+				User = user , 
+                RefreshToken = refreshToken , 
+                RefreshTokenExp = DateTime.Now.AddDays(30)
+			});
+
+            return new LoginResultDto
+            {
+                JwtToken = jwtToken , 
+                RefreshToken = refreshToken
+            };
+		}
     }
 }

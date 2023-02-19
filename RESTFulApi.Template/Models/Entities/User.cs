@@ -13,6 +13,8 @@
 		public int Id { get; set; }
 		public string HashToken { get; set; }
 		public DateTime ExpireDate { get; set; }
+		public string RefreshToken { get; set; }
+		public DateTime RefreshTokenExp { get; set; }
 		public User User { get; set; }
 		public Guid UserId { get; set; }
 	}
